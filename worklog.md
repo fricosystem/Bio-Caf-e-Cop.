@@ -137,3 +137,20 @@ Stage Summary:
 - Gallery and Filosofia Bio sections now show REAL photos of Bio Café & Co. from Google Maps
 - All 7 provided URLs used (no duplicates found), placed contextually
 - Layout, lightbox, responsiveness, and hydration all verified clean
+
+---
+Task ID: 6
+Agent: Main (Z.ai Code)
+Task: Add "Desenvolvido por Bruno Moreira de Assis" credit in footer
+
+Work Log:
+- Added a centered credit line below the copyright/feito-com row in footer.tsx
+- Styled subtly (text-background/45, with "Bruno Moreira de Assis" in font-semibold text-background/75) on a faint divider border so it reads as a developer attribution without competing with the brand row
+
+Verification:
+- `bun run lint`: passes clean
+- Browser: credit text confirmed present ("CREDIT PRESENT") in footer
+- VLM: "Yes, the text 'Desenvolvido por Bruno Moreira de Assis' is visible in the footer. It is readable and well-styled"
+
+Stage Summary:
+- Developer credit added to footer, verified clean

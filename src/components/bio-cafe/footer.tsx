@@ -119,6 +119,12 @@ export function Footer() {
             em Pinheiros, São Paulo
           </p>
         </div>
+        <div className="mt-3 pt-3 border-t border-background/10 flex flex-col sm:flex-row items-center justify-center gap-1.5 text-xs text-background/45">
+          <p className="flex items-center gap-1.5">
+            Desenvolvido por
+            <span className="font-semibold text-background/75">Bruno Moreira de Assis</span>
+          </p>
+        </div>
       </div>
     </footer>
   );
