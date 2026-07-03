@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Sprout, HeartHandshake, Recycle } from "lucide-react";
+import { cafePhotos } from "@/lib/cafe-photos";
 
 const pillars = [
   {
@@ -31,8 +32,8 @@ export function FilosofiaSection() {
           <div className="relative order-2 lg:order-1">
             <div className="relative aspect-[4/5] sm:aspect-[5/4] rounded-3xl overflow-hidden shadow-xl">
               <Image
-                src="/images/gallery-ingredients.png"
-                alt="Ingredientes frescos e orgânicos do Bio Café & Co."
+                src={cafePhotos.scoopingFruits}
+                alt="Mão enluvada servindo frutas secas frescas no Bio Café & Co."
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"

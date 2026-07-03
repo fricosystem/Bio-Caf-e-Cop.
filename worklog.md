@@ -101,3 +101,39 @@ Stage Summary:
 - Hydration mismatch error resolved (Radix useId divergence fixed via mounted gate)
 - Hero now shows the real Bio Café & Co. Google Maps storefront photo
 - Dev server running persistently via start-stop-daemon, HTTP 200, lint clean
+
+---
+Task ID: 5
+Agent: Main (Z.ai Code)
+Task: Replace AI gallery/filosofia images with real Google Maps photos of the café
+
+Work Log:
+- User provided 7 Google Maps photo URLs; downloaded + MD5-hashed all 7 → all unique (NO duplicates), all HTTP 200
+- VLM-analyzed each photo's content:
+  - img1: interior wide shot (landscape)
+  - img2: shelves with products/snacks
+  - img3: physical menu board
+  - img4: interior (second angle)
+  - img5: shelf with product rows
+  - img6: hand holding branded yellow "BIO CAFÉ & CO" cup
+  - img7: gloved hand scooping dried fruits (ingredients)
+- Upgraded all URLs from small (=s677-k-no etc.) to high-res =s1600-k-no variant (e.g. img1: 157KB → 408KB) for crisp rendering
+- Created src/lib/cafe-photos.ts: central config of all 7 real photo URLs + typed galleryShots array
+- Updated filosofia.tsx: replaced AI /images/gallery-ingredients.png with real img7 (scoopingFruits) — fits "Ingredientes Frescos" pillar perfectly
+- Redesigned galeria.tsx: replaced 5 AI images with 6 real photos in a 3-column bento grid (1 feature tile col-span-2 row-span-2 + 5 standard tiles). Feature = interiorWide; others = brandedCup, menuBoard, shelvesProducts, interiorTwo, shelfRows. Lightbox (Dialog) preserved and works with new images.
+- All 7 real photos now placed: 6 in Gallery + 1 in Filosofia Bio
+
+Verification (Agent Browser + VLM):
+- All 6 gallery images load: complete:true, proper naturalWidth/Height, no console errors
+- Filosofia image loads: complete:true (720x960)
+- VLM gallery: "6 photo tiles visible... clean and balanced bento grid... showcases the cafe's interior and products effectively"
+- VLM filosofia: "real photo showing a gloved hand handling food/ingredients... text clearly readable... professional"
+- Lightbox opens correctly with new images (close button present), no errors
+- No hydration errors, no page errors
+- `bun run lint`: passes clean (0 errors)
+- Dev server: HTTP 200
+
+Stage Summary:
+- Gallery and Filosofia Bio sections now show REAL photos of Bio Café & Co. from Google Maps
+- All 7 provided URLs used (no duplicates found), placed contextually
+- Layout, lightbox, responsiveness, and hydration all verified clean

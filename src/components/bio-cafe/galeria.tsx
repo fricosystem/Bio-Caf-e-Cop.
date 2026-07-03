@@ -4,45 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-
-type Shot = {
-  src: string;
-  alt: string;
-  caption: string;
-  span?: string;
-};
-
-const shots: Shot[] = [
-  {
-    src: "/images/gallery-interior.png",
-    alt: "Ambiente claro e arejado do café com plantas",
-    caption: "Ambiente claro e cheio de plantas",
-    span: "sm:col-span-2 sm:row-span-2",
-  },
-  {
-    src: "/images/gallery-plated.png",
-    alt: "Prato saudável montado com cuidado",
-    caption: "Pratos montados com cuidado",
-  },
-  {
-    src: "/images/gallery-coffee.png",
-    alt: "Estação de café especial do Bio Café",
-    caption: "Café especial tirado na hora",
-  },
-  {
-    src: "/images/gallery-ingredients.png",
-    alt: "Ingredientes frescos e orgânicos sobre a bancada",
-    caption: "Ingredientes frescos e orgânicos",
-  },
-  {
-    src: "/images/menu-latte.png",
-    alt: "Xícara de latte com arte",
-    caption: "Latte com arte na xícara",
-  },
-];
+import { galleryShots, type CafePhoto } from "@/lib/cafe-photos";
 
 export function GaleriaSection() {
-  const [active, setActive] = useState<Shot | null>(null);
+  const [active, setActive] = useState<CafePhoto | null>(null);
+
+  // First shot is the feature tile (spans 2 cols x 2 rows); the rest are standard tiles.
+  const [feature, ...rest] = galleryShots;
 
   return (
     <section id="galeria" className="py-20 sm:py-28 bg-background scroll-mt-16">
@@ -55,24 +23,44 @@ export function GaleriaSection() {
             Um cantinho para respirar e saborear
           </h2>
           <p className="mt-4 text-muted-foreground leading-relaxed">
-            Conheça o ambiente, os ingredientes e os pratos que tornam cada visita
-            ao Bio Café & Co. um momento especial.
+            Fotos reais do nosso salão, dos nossos produtos e do dia a dia no
+            Bio Café & Co. Clique para ampliar.
           </p>
         </div>
 
-        <div className="mt-10 sm:mt-12 grid grid-cols-2 sm:grid-cols-4 auto-rows-[180px] sm:auto-rows-[220px] gap-3 sm:gap-4">
-          {shots.map((shot) => (
+        <div className="mt-10 sm:mt-12 grid grid-cols-2 sm:grid-cols-3 auto-rows-[170px] sm:auto-rows-[230px] gap-3 sm:gap-4">
+          {/* Feature tile */}
+          <button
+            onClick={() => setActive(feature)}
+            className="group relative overflow-hidden rounded-2xl border border-border hover:border-primary/40 transition-colors col-span-2 row-span-2"
+            aria-label={`Ampliar imagem: ${feature.caption}`}
+          >
+            <Image
+              src={feature.src}
+              alt={feature.alt}
+              fill
+              sizes="(max-width: 640px) 100vw, 66vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="absolute bottom-3 left-3 right-3 text-left text-sm font-medium text-white opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+              {feature.caption}
+            </span>
+          </button>
+
+          {/* Standard tiles */}
+          {rest.map((shot) => (
             <button
               key={shot.src}
               onClick={() => setActive(shot)}
-              className={`group relative overflow-hidden rounded-2xl border border-border hover:border-primary/40 transition-colors ${shot.span ?? ""}`}
+              className="group relative overflow-hidden rounded-2xl border border-border hover:border-primary/40 transition-colors"
               aria-label={`Ampliar imagem: ${shot.caption}`}
             >
               <Image
                 src={shot.src}
                 alt={shot.alt}
                 fill
-                sizes="(max-width: 640px) 50vw, 25vw"
+                sizes="(max-width: 640px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
